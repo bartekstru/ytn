@@ -75,12 +75,11 @@ A CLI tool to generate study notes from YouTube videos using Azure OpenAI servic
    ```
 
 ## Usage
-
 Basic usage:
 ```bash
-ytn process "https://youtube.com/watch?v=VIDEO_ID"
+ytn "https://youtube.com/watch?v=VIDEO_ID"
 ```
 
 Specify output file:
 ```bash
-ytn process "https://youtube.com/watch?v=VIDEO_ID" -o notes.md
+ytn "https://youtube.com/watch?v=VIDEO_ID" -o notes.md
