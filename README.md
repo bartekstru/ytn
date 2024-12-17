@@ -83,3 +83,4 @@ ytn "https://youtube.com/watch?v=VIDEO_ID"
 Specify output file:
 ```bash
 ytn "https://youtube.com/watch?v=VIDEO_ID" -o notes.md
+```
