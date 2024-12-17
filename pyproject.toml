@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "ytn"
+version = "0.1.0"
+description = "YouTube Notes - A CLI tool to generate study notes from YouTube videos"
+authors = ["Your Name <your.email@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+yt-dlp = "^2024.3.10"
+openai = "^1.12.0"
+typer = "^0.9.0"
+pydantic = "^2.6.1"
+ffmpeg-python = "^0.2.0"
+python-dotenv = "^1.0.0"
+
+[tool.poetry.scripts]
+ytn = "ytn.cli:app"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api" 
