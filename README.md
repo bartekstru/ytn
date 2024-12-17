@@ -46,6 +46,14 @@ A CLI tool to generate study notes from YouTube videos using Azure OpenAI servic
    poetry install
    ```
 
+   Or install dependencies directly with pip:
+   ```bash
+   git clone https://github.com/yourusername/ytn.git
+   cd ytn
+   pip install -r requirements.txt
+   pip install -e .
+   ```
+
 ## Configuration
 
 1. Copy the `.env.example` file to `.env`:
