@@ -15,7 +15,7 @@ class VideoInfo(BaseModel):
 
 def compress_audio(input_path: Path) -> Tuple[Path, int, int]:
     """
-    Compress audio file and return the new path and sizes.
+    Compress audio file to target size of 24.5MB.
     
     Returns:
         Tuple containing:
@@ -23,14 +23,29 @@ def compress_audio(input_path: Path) -> Tuple[Path, int, int]:
         - Original size in bytes
         - Compressed size in bytes
     """
+    TARGET_SIZE_MB = 24.5
+    TARGET_SIZE_BYTES = int(TARGET_SIZE_MB * 1024 * 1024)
+    
     original_size = input_path.stat().st_size
     output_path = input_path.parent / "compressed.mp3"
     
-    # Compress using ffmpeg with a lower bitrate
+    # Get audio duration using ffprobe
+    probe = ffmpeg.probe(str(input_path))
+    duration_seconds = float(probe['format']['duration'])
+    
+    # Calculate required bitrate (in bits per second) to achieve target file size
+    # File size = (bitrate * duration) / 8
+    # Therefore: bitrate = (target_size * 8) / duration
+    target_bitrate = int((TARGET_SIZE_BYTES * 8) / duration_seconds)
+    
+    # Convert to kbps for ffmpeg and ensure it's within reasonable bounds
+    target_kbps = max(min(target_bitrate // 1000, 320), 32)  # Between 32k and 320k
+    
+    # Compress using ffmpeg with calculated bitrate
     stream = ffmpeg.input(str(input_path))
     stream = ffmpeg.output(stream, str(output_path), 
                          acodec='libmp3lame', 
-                         ab='64k',  # Lower bitrate for smaller file
+                         ab=f'{target_kbps}k',
                          loglevel='error')
     ffmpeg.run(stream, overwrite_output=True)
     
